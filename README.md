@@ -9,6 +9,8 @@
 - support to configurate the style of watermark text, such as the font, rotate angle, chunkWidth, chunkHeight.
 - the watermark is draw by canvas
 
+### display
+- ![water mark image](http://okup5z621.bkt.clouddn.com/watermark.jpeg)
 
 ### install
 
