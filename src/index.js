@@ -41,7 +41,7 @@ class WaterMark extends React.Component {
       const dom = document.getElementById('water-mark-observer')
       const parent = document.getElementById('water-mark-wrapper')
       const security = new SecurityDefense(waterMarkStyle, this.getStyles, securityAlarm)
-      security.registerNodeRemoveListener(dom, parent)
+      security.registerNodeRemoveListener(parent)
       security.registerNodeAttrChangeListener(dom)
     }
   }

@@ -71,6 +71,13 @@ or you can also load as follows:
   }
 ```
 
+### compatibility
+- as we all know, [the react support IE9+ from version 15](https://reactjs.org/blog/2016/01/12/discontinuing-ie8-support.html), about the detail you can read the [react-dom browser support](https://reactjs.org/docs/react-dom.html#browser-support)
+- in the part of security defense, we use MutationObserver(IE 11+) to observe the dom deleting and the dom attribute change. MutationObserver is included in the [DOM4 standard](https://dom.spec.whatwg.org/#mutationobserver).
+- [MutationObserver compatibility](https://caniuse.com/#search=MutationObserver)
+- [MutationObserver introduction](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+
+
 ### Contributing
 - compile
 

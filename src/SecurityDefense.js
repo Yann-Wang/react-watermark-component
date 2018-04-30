@@ -10,13 +10,27 @@ export default class SecurityDefense {
     return document.getElementById(this.randomId)
   }
 
-  registerNodeRemoveListener = (dom, parent) => {
-    dom.addEventListener('DOMNodeRemoved', () => {
-      this.createWaterMarkDom(parent)
-      if (this.securityAlarm) {
-        this.securityAlarm()
-      }
-    }, false)
+  registerNodeRemoveListener = (target) => {
+    let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
+    let observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+          const removeNodes = mutation.removedNodes
+          if (removeNodes && removeNodes[0] && removeNodes[0].id) {
+            const id = removeNodes[0].id
+            if (id && id.indexOf('water-mark-observer') > -1) {
+              this.createWaterMarkDom(target)
+              observer.disconnect()
+              if (this.securityAlarm) {
+                this.securityAlarm()
+              }
+            }
+          }
+        }
+      })
+    })
+    let config = { childList: true }
+    observer.observe(target, config)
   }
 
   createWaterMarkDom = (parent) => {
@@ -27,13 +41,13 @@ export default class SecurityDefense {
     newWaterMark.style = this.waterMarkStyle
     parent.appendChild(newWaterMark)
     const newDom = this.getWaterMarkDom()
-    this.registerNodeRemoveListener(newDom, parent)
+    this.registerNodeRemoveListener(parent)
     this.registerNodeAttrChangeListener(newDom)
   }
 
   registerNodeAttrChangeListener = (target) => {
     let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
-    var observer = new MutationObserver((mutations) => {
+    let observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'attributes') {
           target.parentNode.removeChild(target)
