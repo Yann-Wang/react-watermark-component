@@ -2,6 +2,13 @@
 - `react-watermark-component` is a component that can generate a water mark background image.
 - this react component is from an internal project of youzan company.
 
+### feature
+- the arrangement is oblique
+- security defense -- prevent somebody from deleting the watermark dom, or modifying the style attribute
+- support securityAlarm callback -- it will be revoked when the watermark is attacked
+- support to configurate the style of watermark text, such as the font, rotate angle, chunkWidth, chunkHeight.
+- the watermark is draw by canvas
+
 
 ### install
 
@@ -36,8 +43,10 @@ or you can also load as follows:
     const beginAlarm = function() { console.log('start alarm'); };
     // the options is optional, the default value of the field of the options object is as follows.
     const options = {
-      chunkWidth: 200, // the width of a piece of water mark, it's suggested that the value is more than the real width, such as the real width is 150, correspondingly the chunkWidth is 200
-      chunkHeight: 60, // the height of a piece of water mark, it's suggested that the value is at least four times than the font-size of the real water mark text
+      // the width of a piece of water mark, it's suggested that the value is more than the real width, such as the real width is 150, correspondingly the chunkWidth is 200
+      chunkWidth: 200,
+      // the height of a piece of water mark, it's suggested that the value is at least four times than the font-size of the real water mark text
+      chunkHeight: 60,
       textAlign: 'left',
       textBaseline: 'bottom',
       globalAlpha: 0.17,
