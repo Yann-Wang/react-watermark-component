@@ -1,0 +1,39 @@
+{
+  "name": "react-water-mark",
+  "version": "1.0.0",
+  "description": "react-water-mark is a component that can generate a water mark background image.",
+  "keywords": [
+    "react",
+    "water mark",
+    "water-mark",
+    "waterMark",
+    "water",
+    "mark"
+  ],
+  "repository": "https://github.com/Yann-Wang/react-water-mark",
+  "main": "dist/index.js",
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "build": "catullus babel ./src --out-dir ./dist"
+  },
+  "author": "Yann-Wang",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^0.14.7 || ^15.0.0 || ^16.0.0"
+  },
+  "devDependencies": {
+    "catullus": "^2.0.0",
+    "babel-eslint": "^8.2.3",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-config-standard-react": "^6.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "prop-types": "^15.6.1",
+    "react-dom": "^16.2.0"
+  },
+  "dependencies": {}
+}
