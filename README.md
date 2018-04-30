@@ -1,30 +1,30 @@
 
-- `react-water-mark` is a component that can generate a water mark background image.
+- `react-watermark-component` is a component that can generate a water mark background image.
 - this react component is from an internal project of youzan company.
 
 
 ### install
 
 ```shell
-    yarn add react-water-mark
+    yarn add react-watermark-component
 ```
 or
 
 ```shell
-  npm i react-water-mark --save
+  npm i react-watermark-component --save
 ```
 
 ### import
 - this package is developed using es6 syntax, so we recommend to load the package as follows:
 
 ```javascript
-    import ReactWaterMark from 'react-water-mark';
+    import ReactWaterMark from 'react-watermark-component';
 ```
 
 or you can also load as follows:
 
 ```javascript
-  const ReactWaterMark = require('react-water-mark')
+  const ReactWaterMark = require('react-watermark-component')
 ```
 
 ### Demo
