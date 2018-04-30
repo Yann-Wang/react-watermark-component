@@ -14,6 +14,8 @@
   "main": "dist/index.js",
   "scripts": {
     "githooks": "cp githooks/* .git/hooks && chmod +x .git/hooks/*",
+    "lint": "node node_modules/.bin/eslint src",
+    "lint-fix": "node node_modules/.bin/eslint --fix src",
     "prepublishOnly": "npm run build",
     "build": "catullus babel ./src --out-dir ./dist"
   },
