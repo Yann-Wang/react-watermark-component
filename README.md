@@ -1,5 +1,6 @@
 
 - `react-water-mark` is a component that can generate a water mark background image.
+- this react component is from an internal project of youzan company.
 
 
 ### install
