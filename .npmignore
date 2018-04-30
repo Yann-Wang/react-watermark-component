@@ -1,5 +1,5 @@
 src/
-.nyc_output/
+githooks/
 .gitignore
 .editconfig
 .eslintrc

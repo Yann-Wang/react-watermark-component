@@ -21,6 +21,7 @@ class WaterMark extends React.Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
     waterMarkText: PropTypes.string.isRequired,
+    openSecurityDefense: PropTypes.bool,
     securityAlarm: PropTypes.func,
     options: PropTypes.shape({
       chunkWidth: PropTypes.number,
@@ -35,12 +36,14 @@ class WaterMark extends React.Component {
   }
 
   componentDidMount() {
-    const dom = document.getElementById('water-mark-observer')
-    const parent = document.getElementById('water-mark-wrapper')
-    const { securityAlarm } = this.props
-    const security = new SecurityDefense(waterMarkStyle, this.getStyles, securityAlarm)
-    security.registerNodeRemoveListener(dom, parent)
-    security.registerNodeAttrChangeListener(dom)
+    const { openSecurityDefense, securityAlarm } = this.props
+    if (openSecurityDefense) {
+      const dom = document.getElementById('water-mark-observer')
+      const parent = document.getElementById('water-mark-wrapper')
+      const security = new SecurityDefense(waterMarkStyle, this.getStyles, securityAlarm)
+      security.registerNodeRemoveListener(dom, parent)
+      security.registerNodeAttrChangeListener(dom)
+    }
   }
 
   getStyles = () => {
@@ -76,6 +79,7 @@ class WaterMark extends React.Component {
 }
 
 WaterMark.defaultProps = {
+  openSecurityDefense: false,
   securityAlarm: noop,
   options: defaultOptions
 }

@@ -7,7 +7,7 @@
 - security defense -- prevent somebody from deleting the watermark dom, or modifying the style attribute
 - support securityAlarm callback -- it will be revoked when the watermark is attacked
 - support to configurate the style of watermark text, such as the font, rotate angle, chunkWidth, chunkHeight.
-- the watermark is draw by canvas
+- the watermark is drawn by canvas
 
 ### display
 - ![water mark image](http://okup5z621.bkt.clouddn.com/watermark.jpeg)
@@ -59,7 +59,8 @@ or you can also load as follows:
     return (
       <ReactWaterMark
         waterMarkText={text}
-        securityAlarm={beginAlarm}
+        openSecurityDefense // by default, the security defense isn't opened
+        securityAlarm={beginAlarm} // when the security defense is opened and water mark is attacked, the securityAlarm callback will be called.
         options={options}
       >
         <AppLayout>
