@@ -1,13 +1,23 @@
 export default class SecurityDefense {
-  constructor(waterMarkStyle, getImageUrl, securityAlarm) {
-    this.randomId = 'water-mark-observer'
-    this.waterMarkStyle = waterMarkStyle
-    this.getImageUrl = getImageUrl
-    this.securityAlarm = securityAlarm
+  constructor(watermarkDOM, style, securityHooks) {
+    this.watermarkId = watermarkDOM.watermarkId
+    this.watermarkWrapperId = watermarkDOM.watermarkWrapperId
+    this.genRandomId = watermarkDOM.genRandomId
+
+    this.waterMarkStyle = style.waterMarkStyle
+    this.getImageUrl = style.getCanvasUrl
+
+    this.securityAlarm = securityHooks.securityAlarm
+    this.updateObserver = securityHooks.updateObserver
+
+    const wrapper = this.getDOM(this.watermarkWrapperId)
+    const watermark = this.getDOM(this.watermarkId)
+    this.registerNodeRemoveListener(wrapper)
+    this.registerNodeAttrChangeListener(watermark)
   }
 
-  getWaterMarkDom = () => {
-    return document.getElementById(this.randomId)
+  getDOM = (id) => {
+    return document.getElementById(id)
   }
 
   registerNodeRemoveListener = (target) => {
@@ -18,12 +28,11 @@ export default class SecurityDefense {
           const removeNodes = mutation.removedNodes
           if (removeNodes && removeNodes[0] && removeNodes[0].id) {
             const id = removeNodes[0].id
-            if (id && id.indexOf('water-mark-observer') > -1) {
-              this.createWaterMarkDom(target)
-              observer.disconnect()
+            if (id && id.indexOf(this.watermarkId) > -1) {
               if (this.securityAlarm) {
                 this.securityAlarm()
               }
+              this.createWaterMarkDom(target)
             }
           }
         }
@@ -31,18 +40,18 @@ export default class SecurityDefense {
     })
     let config = { childList: true }
     observer.observe(target, config)
+    this.updateObserver({ DOMRemoveObserver: observer })
   }
 
   createWaterMarkDom = (parent) => {
     const newWaterMark = document.createElement('div')
-    this.randomId = `water-mark-observer-${(new Date()).getTime()}`
-    newWaterMark.id = this.randomId
+    this.watermarkId = this.genRandomId('water-mark-dynamic')
+    newWaterMark.id = this.watermarkId
     this.waterMarkStyle = this.waterMarkStyle.concat(`background-image: url("${this.getImageUrl()}");`)
     newWaterMark.style = this.waterMarkStyle
     parent.appendChild(newWaterMark)
-    const newDom = this.getWaterMarkDom()
-    this.registerNodeRemoveListener(parent)
-    this.registerNodeAttrChangeListener(newDom)
+    const newDOM = this.getDOM(this.watermarkId)
+    this.registerNodeAttrChangeListener(newDOM)
   }
 
   registerNodeAttrChangeListener = (target) => {
@@ -57,5 +66,6 @@ export default class SecurityDefense {
     })
     let config = { attributes: true, attributeFilter: ['style'] }
     observer.observe(target, config)
+    this.updateObserver({ DOMAttrModifiedObserver: observer })
   }
 }
