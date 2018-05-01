@@ -10,6 +10,10 @@
 - support to use this component twice or more times in one page
 - the watermark is drawn by canvas
 
+### suggestion
+- we suggest to use this component in the global, namely, the root dom.
+- the performance is better when the component is used in single page application, the position is the root component of react-router.
+
 ### display
 - ![water mark image](http://okup5z621.bkt.clouddn.com/watermark.jpeg)
 
@@ -37,18 +41,37 @@ or you can also load as follows:
   const ReactWaterMark = require('react-watermark-component')
 ```
 
+### the props of this component
+- waterMarkText:string, the text of watermark
+
+- openSecurityDefense:bool, decide whether to open security defense. By default, the security defense isn't opened.
+
+- securityAlarm:function, when the security defense is opened and water mark is attacked, the securityAlarm callback will be called. The securityAlarm props is optional, it will be triggered when someone is deleting the water mark dom or modifying the style attribute of the water mark dom.
+
+- options:object, the options is optional, the default value of the field of the options object is as follows.
+
+  | `option` | `default value` |
+  | --------- | ------------- |
+  | chunkWidth | `200` |
+  | chunkHeight | `60` |
+  | textAlign | `'left'` |
+  | textBaseline | `'bottom'` |
+  | globalAlpha | `0.17` |
+  | font | `'14px Microsoft Yahei'` |
+  | rotateAngle | `-0.26` |
+  | fillStyle | `'#666'` |
+
+  - chunkWidth:number, the width of a piece of water mark, it's suggested that the value is more than the real width, such as the real width is 150, correspondingly the chunkWidth is 200
+  - chunkHeight:number, the height of a piece of water mark, it's suggested that the value is at least four times than the font-size of the real water mark text
+
 ### Demo
 
 ```javascript
   render() {
     const text = `${loginedUser.cas_username}, ${loginedUser.cas_id}`;
-    // the securityAlarm props is optional, it will be triggered when someone is deleting the water mark dom or modifying the style attribute of the water mark dom.
     const beginAlarm = function() { console.log('start alarm'); };
-    // the options is optional, the default value of the field of the options object is as follows.
     const options = {
-      // the width of a piece of water mark, it's suggested that the value is more than the real width, such as the real width is 150, correspondingly the chunkWidth is 200
       chunkWidth: 200,
-      // the height of a piece of water mark, it's suggested that the value is at least four times than the font-size of the real water mark text
       chunkHeight: 60,
       textAlign: 'left',
       textBaseline: 'bottom',
@@ -60,8 +83,8 @@ or you can also load as follows:
     return (
       <ReactWaterMark
         waterMarkText={text}
-        openSecurityDefense // by default, the security defense isn't opened
-        securityAlarm={beginAlarm} // when the security defense is opened and water mark is attacked, the securityAlarm callback will be called.
+        openSecurityDefense
+        securityAlarm={beginAlarm}
         options={options}
       >
         <AppLayout>
