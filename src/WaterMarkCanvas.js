@@ -16,11 +16,12 @@ export default function getWaterMarkCanvas(text, options) {
   ctx.translate(-canvasWidth / 2 * 1.2, -canvasHeight / 2 * 1.2)
   ctx.fillStyle = options.fillStyle
 
+  const angleHeight = (Math.abs(options.rotateAngle) * canvasHeight)
   const waterMarkText = []
   const chunkWidth = options.chunkWidth
   const chunkHeight = options.chunkHeight
   const horizontalChunkCount = Math.ceil(canvasWidth / chunkWidth) + 1
-  const verticalChunkCount = Math.ceil(canvasHeight / chunkHeight) + 1
+  const verticalChunkCount = Math.ceil((canvasHeight + angleHeight) / chunkHeight) + 1
 
   for (let j = 0, initY = chunkHeight / 2, indent = 0; j <= verticalChunkCount; j += 1) {
     indent = parseInt(j % 2)
@@ -35,7 +36,7 @@ export default function getWaterMarkCanvas(text, options) {
   }
 
   waterMarkText.forEach((item) => {
-    ctx.fillText(item.text, item.x, item.y)
+    ctx.fillText(item.text, item.x, item.y - angleHeight)
   })
 
   return ctx.canvas.toDataURL()
