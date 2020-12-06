@@ -1,6 +1,6 @@
 {
-  "name": "react-watermark-component",
-  "version": "2.2.1",
+  "name": "yd-react-watermark-component",
+  "version": "1.0.5",
   "description": "react-watermark-component is a component that can generate a water mark background image.",
   "keywords": [
     "react",
@@ -10,7 +10,7 @@
     "water",
     "mark"
   ],
-  "repository": "https://github.com/Yann-Wang/react-watermark-component",
+  "repository": "https://github.com/Lsasa/react-watermark-component",
   "main": "dist/index.js",
   "scripts": {
     "githooks": "cp githooks/* .git/hooks && chmod +x .git/hooks/*",
@@ -19,7 +19,7 @@
     "prepublishOnly": "npm run build",
     "build": "catullus babel ./src --out-dir ./dist"
   },
-  "author": "Yann-Wang",
+  "author": "lisa",
   "license": "MIT",
   "peerDependencies": {
     "react": "^0.14.7 || ^15.0.0 || ^16.0.0"
