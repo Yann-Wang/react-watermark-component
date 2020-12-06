@@ -21,7 +21,6 @@ class WaterMark extends React.Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
     waterMarkText: PropTypes.string.isRequired,
-    openSecurityDefense: PropTypes.bool,
     securityAlarm: PropTypes.func,
     options: PropTypes.shape({
       chunkWidth: PropTypes.number,
@@ -35,65 +34,16 @@ class WaterMark extends React.Component {
     })
   }
 
-  constructor(props) {
-    super(props)
-    this.watermarkId = this.genRandomId('water-mark')
-    this.watermarkWrapperId = this.genRandomId('water-mark-wrapper')
-    this.security = null
-    this.DOMRemoveObserver = null
-    this.DOMAttrModifiedObserver = null
-  }
-
-  encrypt = (str) => {
-    return window.btoa(decodeURI(encodeURIComponent(str)))
-  }
-
-  genRandomId = (prefix = '') => {
-    return `${this.encrypt(prefix)}-${(new Date()).getTime()}-${Math.floor(Math.random() * Math.pow(10, 8))}`
-  }
-
   componentDidMount() {
-    const { openSecurityDefense, securityAlarm } = this.props
-    if (openSecurityDefense) {
-      const style = {
-        waterMarkStyle,
-        getCanvasUrl: this.getCanvasUrl
-      }
-      const securityHooks = {
-        securityAlarm,
-        updateObserver: this.updateObserver
-      }
-      const watermarkDOM = {
-        watermarkId: this.watermarkId,
-        watermarkWrapperId: this.watermarkWrapperId,
-        genRandomId: this.genRandomId
-      }
-      this.security = new SecurityDefense(watermarkDOM, style, securityHooks)
-    }
+    const dom = document.getElementById('water-mark-observer')
+    const parent = document.getElementById('water-mark-wrapper')
+    const { securityAlarm } = this.props
+    const security = new SecurityDefense(waterMarkStyle, this.getStyles, securityAlarm)
+    security.registerNodeRemoveListener(dom, parent)
+    security.registerNodeAttrChangeListener(dom)
   }
 
-  componentWillUnmount() {
-    if (this.props.openSecurityDefense) {
-      if (this.DOMRemoveObserver) {
-        this.DOMRemoveObserver.disconnect()
-      }
-      if (this.DOMAttrModifiedObserver) {
-        this.DOMAttrModifiedObserver.disconnect()
-      }
-      this.security = null
-    }
-  }
-
-  updateObserver = (observers = {}) => {
-    if (observers.DOMRemoveObserver) {
-      this.DOMRemoveObserver = observers.DOMRemoveObserver
-    }
-    if (observers.DOMAttrModifiedObserver) {
-      this.DOMAttrModifiedObserver = observers.DOMAttrModifiedObserver
-    }
-  }
-
-  getCanvasUrl = () => {
+  getStyles = () => {
     const { waterMarkText, options } = this.props
     const newOptions = Object.assign({}, defaultOptions, options)
     return getWaterMarkCanvas(waterMarkText, newOptions)
@@ -113,14 +63,14 @@ class WaterMark extends React.Component {
       zIndex: 9999,
       pointerEvents: 'none',
       overflow: 'hidden',
-      backgroundImage: `url("${this.getCanvasUrl()}")`,
+      backgroundImage: `url("${this.getStyles()}")`,
       backgroundColor: 'transparent',
       backgroundRepeat: 'repeat'
     }
 
     return (
-      <div style={{ position: 'relative' }} id={this.watermarkWrapperId}>
-        <div style={styles} id={this.watermarkId} />
+      <div style={{ position: 'relative' }} id="water-mark-wrapper">
+        <div style={styles} id="water-mark-observer" />
         {children}
       </div>
     )
@@ -128,7 +78,6 @@ class WaterMark extends React.Component {
 }
 
 WaterMark.defaultProps = {
-  openSecurityDefense: false,
   securityAlarm: noop,
   options: defaultOptions
 }
