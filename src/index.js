@@ -57,6 +57,8 @@ class WaterMark extends React.Component {
       right: 0,
       top: 0,
       bottom: 0,
+      width: '100%',
+      height: '100%',
       opacity: 0.7,
       zIndex: 9999,
       pointerEvents: 'none',
